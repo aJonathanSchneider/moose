@@ -1,6 +1,7 @@
 package de.shnyder.moose.user.service;
 
 import java.sql.Time;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -20,13 +21,13 @@ public class UserService {
 	@Autowired
 	private UserDataRepository userDataRepository;
 
-	public boolean isUserRegistered() {
-		return userDataRepository.exists();
+	public boolean isUserRegistered(String username) {
+		return userDataRepository.findByUsername(username) != null;
 	}
 
 	@Transactional
 	public BaseUserDataDAO registerUser(String username) throws MooseError {
-		if(userDataRepository.exists()){
+		if(this.isUserRegistered(username)){
 			throw new MooseError("tried to register a user that already exists");
 		}
 		BaseUserDataDAO baseUserDataDAO = new BaseUserDataDAO();
@@ -35,5 +36,19 @@ public class UserService {
 		baseUserDataDAO.setLastLogin(new Time(today.getTime()));
 		userDataRepository.save(baseUserDataDAO);
 		return baseUserDataDAO;
+	}
+
+	public void deleteUserById(long id) throws MooseError {
+		userDataRepository.deleteById(id);
+	}
+
+	public Iterable<BaseUserDataDAO> listAllUsers() throws MooseError {
+		return userDataRepository.findAll();
+	}
+
+	public BaseUserDataDAO getUserById(long id) throws MooseError {
+		Optional<BaseUserDataDAO> optionalDAO = userDataRepository.findById(id);
+		if(optionalDAO.isPresent()) return optionalDAO.get();
+		throw new MooseError("user not found", MooseError.ERR_NOT_FOUND);
 	}
 }
