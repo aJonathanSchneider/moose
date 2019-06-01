@@ -21,6 +21,11 @@
 	</properties>
 
 	<dependencies>
+		<!-- health checks etc -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -29,7 +34,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -37,7 +42,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-data</artifactId>
-		</dependency>
+		</dependency-->
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -49,18 +54,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency-->
 
 		<!-- connecting to auth microservice -->
-		<dependency>
+		<!--dependency>
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-spring-boot-2-starter</artifactId>
 			<version>4.0.0.Final</version>
-		</dependency>
+		</dependency-->
 
 		<!-- to map from DAOs to DTOs -->
 		<dependency>

@@ -51,4 +51,6 @@ public class UserService {
 		if(optionalDAO.isPresent()) return optionalDAO.get();
 		throw new MooseError("user not found", MooseError.ERR_NOT_FOUND);
 	}
+
+	// TODO: implement update
 }

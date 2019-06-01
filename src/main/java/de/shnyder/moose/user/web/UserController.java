@@ -51,6 +51,7 @@ class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<ApiResultOkDeleteUsersModel> deleteUserById(Long id) {
+        userService.deleteUserById(id);
         ApiSubDeleteOkModel deleteModel = new ApiSubDeleteOkModel();
         deleteModel.deletedId(id);
         ApiResultOkDeleteUsersModel rv = new ApiResultOkDeleteUsersModel();
@@ -83,7 +84,7 @@ class UserController implements UsersApi {
         ApiResultOkPutUsersModel rv = new ApiResultOkPutUsersModel();
         if(id != userModel.getId()) throw new MooseError("path id and body id not equal", MooseError.ERR_USERS_FAULT_USERCANFIX);
         rv.version(userApiVersion).result(convertToDto(userService.getUserById(id)));
-        return new ResponseEntity<ApiResultOkPutUsersModel>(rv, HttpStatus.OK);
+        return UsersApi.super.updateUserById(id, userModel);
     }
 
     private UserModel convertToDto(BaseUserDataDAO dao) {
