@@ -7,6 +7,286 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
+  /projects:
+    get:
+      summary: List all projects
+      operationId: listProjects
+      tags:
+        - projects
+      responses:
+        200:
+          description: An array of all projects
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/ApiResultOkGetProjects"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+    post:
+      summary: Create a project
+      operationId: createProject
+      requestBody:
+        description: the project to be created
+        content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewProject"
+              examples:
+                success:
+                  summary: Example of successful project creation
+                  value:
+                    id: 1
+                    projectname: 'Herbert'
+                    lastLogin: '2019-05-25 11:23'
+                error:
+                  summary: Example of an already exists error response
+                  value:
+                    errorCode: "00002"
+                    errorMsg: "duplicated account already exist"
+      tags:
+        - projects
+      responses:
+        200:
+          description: project successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultOkPostProjects'
+        422:
+          description: project with that name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultError'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+  /projects/{id}:
+    get:
+      summary: Info about a project
+      operationId: showProjectById
+      tags:
+        - projects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the project to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultOkGetProject"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+    put:
+      summary: updates project by id
+      operationId: updateProjectById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: the project to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        200:
+          description: project update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultOkPutProjects'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+    delete:
+      summary: deletes project by id
+      operationId: deleteProjectById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        204:
+          description: project deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultOkDeleteProjects'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+  /customers:
+    get:
+      summary: List all customers
+      operationId: listCustomers
+      tags:
+        - customers
+      responses:
+        200:
+          description: An array of all customers
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/ApiResultOkGetCustomers"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+    post:
+      summary: Create a customer
+      operationId: createCustomer
+      requestBody:
+        description: the customer to be created
+        content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewCustomer"
+              examples:
+                success:
+                  summary: Example of successful customer creation
+                  value:
+                    id: 1
+                    customername: 'Herbert'
+                    lastLogin: '2019-05-25 11:23'
+                error:
+                  summary: Example of an already exists error response
+                  value:
+                    errorCode: "00002"
+                    errorMsg: "duplicated account already exist"
+      tags:
+        - customers
+      responses:
+        200:
+          description: customer successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultOkPostCustomers'
+        422:
+          description: customer with that name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultError'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+  /customers/{id}:
+    get:
+      summary: Info about a customer
+      operationId: showCustomerById
+      tags:
+        - customers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the customer to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultOkGetCustomer"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+    put:
+      summary: updates customer by id
+      operationId: updateCustomerById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: the customer to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        200:
+          description: customer update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultOkPutCustomers'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
+    delete:
+      summary: deletes customer by id
+      operationId: deleteCustomerById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        204:
+          description: customer deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResultOkDeleteCustomers'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResultError"
   /timeblocks:
     get:
       summary: List all timeblocks
@@ -292,6 +572,50 @@ paths:
 
 components:
   schemas:
+    NewCustomer:
+      type: object
+      required:
+        - customername
+      properties:
+        customername:
+          type: string
+    Customer:
+      required:
+        - id
+      allOf:
+        - $ref: '#/components/schemas/NewCustomer'
+        - properties:
+            id:
+              type: integer
+              format: int64
+            lastLogin:
+              type: string
+    Customers:
+      type: array
+      items:
+        $ref: "#/components/schemas/Customer"
+    NewProject:
+      type: object
+      required:
+        - projectname
+      properties:
+        projectname:
+          type: string
+    Project:
+      required:
+        - id
+      allOf:
+        - $ref: '#/components/schemas/NewProject'
+        - properties:
+            id:
+              type: integer
+              format: int64
+            lastLogin:
+              type: string
+    Projects:
+      type: array
+      items:
+        $ref: "#/components/schemas/Project"
     NewUser:
       type: object
       required:
@@ -375,6 +699,72 @@ components:
         - properties:
             result:
               $ref: '#/components/schemas/TimeBlocks'
+    ## projects
+    ### CRUD
+    ApiResultOkPostProjects:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Project'
+    ApiResultOkGetProject:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Project'
+    ApiResultOkPutProjects:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Project'
+    ApiResultOkDeleteProjects:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/ApiSubDeleteOk'
+    ### list / search
+    ApiResultOkGetProjects:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Projects'
+    ## customers
+    ### CRUD
+    ApiResultOkPostCustomers:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Customer'
+    ApiResultOkGetCustomer:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Customer'
+    ApiResultOkPutCustomers:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Customer'
+    ApiResultOkDeleteCustomers:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/ApiSubDeleteOk'
+    ### list / search
+    ApiResultOkGetCustomers:
+      allOf:
+        - $ref: '#/components/schemas/ApiResultOk'
+        - properties:
+            result:
+              $ref: '#/components/schemas/Customers'
     ## users
     ### CRUD
     ApiResultOkPostUsers:

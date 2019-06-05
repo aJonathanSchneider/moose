@@ -32,6 +32,8 @@ public class TimeBlockDAO {
 	@NotNull
 	protected OffsetDateTime endTime;
 
+	protected String description;
+
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = BaseUserDataDAO.class)
 	@JoinColumn(
         name = "userId",
@@ -76,5 +78,13 @@ public class TimeBlockDAO {
 
 	public void setUser(BaseUserDataDAO user) {
 		this.user = user;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
